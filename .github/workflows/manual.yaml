@@ -18,7 +18,7 @@ on:
 
 jobs:
   log-the-inputs:
-    if:  ${{ inputs.logLevel }} == "info"
+    if:  ${{ inputs.logLevel == 'info' }}
     runs-on: ubuntu-latest
     steps:
       - run: |
@@ -30,7 +30,7 @@ jobs:
           TAGS: ${{ inputs.tags }}
           ENVIRONMENT: ${{ inputs.environment }}
   log-the-inputs1:
-    if:  ${{ inputs.logLevel }} == "warning"
+    if:  ${{ inputs.logLevel == 'warning' }}
     runs-on: ubuntu-latest
     steps:
       - run: |
