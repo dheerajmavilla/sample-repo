@@ -23,7 +23,10 @@ jobs:
       - run: |
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
-          echo "Environment: $ENVIRONMENT"
+          echo "Environment: $ENVIRONMENT" \
+          "abc" \
+          "exy"
+          
         env:
           LEVEL: ${{ inputs.logLevel }}
           TAGS: ${{ inputs.tags }}
