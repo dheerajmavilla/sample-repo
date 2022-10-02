@@ -1,34 +1,33 @@
-name: manual test
 on:
   workflow_dispatch:
     inputs:
       logLevel:
         description: 'Log level'
         required: true
-        default: 'warning' 
+        default: 'warning'
         type: choice
         options:
         - info
         - warning
-        - debug 
-      print_tags:
-        description: 'True to print to STDOUT'
-        required: false
-        type: boolean 
+        - debug
       tags:
         description: 'Test scenario tags'
         required: false
-        type: string
+        type: boolean
       environment:
         description: 'Environment to run tests against'
         type: environment
-        required: false
-  
+        required: true
 
 jobs:
-  print-tag:
+  log-the-inputs:
     runs-on: ubuntu-latest
-    if:  ${{ inputs.print_tags }} 
     steps:
-      - name: Print the input tag to STDOUT
-        run: echo  The tags are ${{ inputs.tags }}
+      - run: |
+          echo "Log level: $LEVEL"
+          echo "Tags: $TAGS"
+          echo "Environment: $ENVIRONMENT"
+        env:
+          LEVEL: ${{ inputs.logLevel }}
+          TAGS: ${{ inputs.tags }}
+          ENVIRONMENT: ${{ inputs.environment }}
