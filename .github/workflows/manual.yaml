@@ -26,8 +26,8 @@ jobs:
     steps:
       - id: step1
         run: |
-          curent_dte=`date +"%Y%m%d-%H%M%S"`
-          echo "::set-output name=test::hello"
+          current_date=`date +"%Y%m%d-%H%M%S"`
+          echo "::set-output name=test::`date +"%Y%m%d-%H%M%S"`"
           echo $curent_dte
           echo $test_env
           echo ${{ inputs.logLevel }}
