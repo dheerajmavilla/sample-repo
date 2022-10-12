@@ -1,0 +1,62 @@
+name: env_test
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: "Log level"
+        required: true
+        default: "warning"
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+      tags:
+        description: 'Test scenario tags'
+        required: false
+        type: boolean
+env:
+  test_env: ${{ inputs.logLevel }}
+
+jobs:
+  log-the-inputs0:
+    runs-on: ubuntu-latest
+    steps:
+      - id: step1
+        run: |
+          current_date=`date +"%Y%m%d-%H%M%S"` >> GITHUB_ENV
+          echo $curent_dte
+          echo $test_env
+          echo ${{ inputs.logLevel }}
+          echo "Log level: $LEVEL"
+          echo "Tags: $TAGS"
+          echo "Environment: $ENVIRONMENT" \
+          "abc" \
+          "exy"
+          
+          #env:
+          # LEVEL: ${{ inputs.logLevel }}
+          #TAGS: ${{ inputs.tags }}
+          # ENVIRONMENT: ${{ inputs.environment }}
+  log-the-inputs:
+    needs: log-the-inputs0
+    if:  ${{ inputs.logLevel == 'info' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          export test_url=https://bla.blabla.com/app/$test_env/testa/${{ env.current_date }}
+          echo $test_url
+          echo ${{ env.current_date }}
+          echo "Log level: $LEVEL"
+          echo "Tags: $TAGS"
+          echo "Environment: $ENVIRONMENT"
+        
+  log-the-inputs1:
+    needs: log-the-inputs0
+    if:  ${{ inputs.logLevel == 'warning' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          export test_url=https://bla.blabla.com/app/$test_env/testa/${{ needs.log-the-inputs0.outputs.curent_dte }}
+          echo $test_url
+          echo "Log level: $LEVEL"
