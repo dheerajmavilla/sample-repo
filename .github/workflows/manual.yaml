@@ -28,6 +28,8 @@ jobs:
           curent_dte=`date +"%Y%m%d-%H%M%S"`
           echo "::set-output name=curent_dte::$curent_dte"
           echo $curent_dte
+          echo $test_env
+          echo ${{ inputs.logLevel }}
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
           echo "Environment: $ENVIRONMENT" \
