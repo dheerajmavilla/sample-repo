@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          export test_url=https://bla.blabla.com/app/$test_env/testa/{{ needs.log-the-inputs0.outputs.curent_dte }}
+          export test_url=https://bla.blabla.com/app/$test_env/testa/${{ needs.log-the-inputs0.outputs.curent_dte }}
           echo $test_url
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
