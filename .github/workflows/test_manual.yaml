@@ -24,7 +24,7 @@ jobs:
     steps:
       - id: step1
         run: |
-          current_date=`date +"%Y%m%d-%H%M%S"` >> GITHUB_ENV
+          echo "current_date=`date +"%Y%m%d-%H%M%S"`" >> $GITHUB_ENV
           echo $curent_dte
           echo $test_env
           echo ${{ inputs.logLevel }}
