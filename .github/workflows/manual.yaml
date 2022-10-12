@@ -22,11 +22,12 @@ jobs:
   log-the-inputs0:
     runs-on: ubuntu-latest
     outputs:
-      curent_dte: ${{ steps.log-the-inputs0.outputs.curent_dte }}
+      output1: ${{ steps.step1.outputs.test }}
     steps:
-      - run: |
+      - id: step1
+        run: |
           curent_dte=`date +"%Y%m%d-%H%M%S"`
-          echo "::set-output name=curent_dte::hello"
+          echo "::set-output name=test::hello"
           echo $curent_dte
           echo $test_env
           echo ${{ inputs.logLevel }}
@@ -48,7 +49,7 @@ jobs:
       - run: |
           export test_url=https://bla.blabla.com/app/$test_env/testa/${{ needs.log-the-inputs0.outputs.curent_dte }}
           echo $test_url
-          echo ${{ needs.log-the-inputs0.outputs.curent_dte }}
+          echo ${{ needs.log-the-inputs0.outputs.output1 }}
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
           echo "Environment: $ENVIRONMENT"
