@@ -21,6 +21,8 @@ env:
 jobs:
   log-the-inputs0:
     runs-on: ubuntu-latest
+    outputs:
+      current-date: ${{ steps.step1.outputs.current-date }}
     steps:
       - id: step1
         run: |
