@@ -22,7 +22,7 @@ jobs:
   log-the-inputs0:
     runs-on: ubuntu-latest
     outputs:
-      current-date: ${{ steps.step1.outputs.current-date }}
+      current-date: ${{ steps.step1.outputs.current_date }}
     steps:
       - id: step1
         run: |
@@ -52,7 +52,7 @@ jobs:
     steps:
       - run: |
           export test_url=https://bla.blabla.com/app/$test_env/testa/${{ env.current_date }}
-          export test_url2=https://bla.blabla.com/app/$test_env/testa/${{ needs.log-the-inputs0.outputs.current_date }}
+          export test_url2=https://bla.blabla.com/app/$test_env/testa/${{ needs.log-the-inputs0.outputs.current-date }}
           echo $test_url
           echo $test_url2
           echo ${{ env.current_date }}
