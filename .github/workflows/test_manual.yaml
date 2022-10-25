@@ -50,7 +50,7 @@ jobs:
     steps:
       - run: |
           export test_url=https://bla.blabla.com/app/$test_env/testa/${{ env.current_date }}
-          export test_url2=https://bla.blabla.com/app/$test_env/testa/${{ needs.log-the-inputs0.outputs.current_date }
+          export test_url2=https://bla.blabla.com/app/$test_env/testa/${{ needs.log-the-inputs0.outputs.current_date }}
           echo $test_url
           echo $test_url2
           echo ${{ env.current_date }}
