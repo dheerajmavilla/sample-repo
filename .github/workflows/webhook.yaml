@@ -13,7 +13,7 @@ jobs:
         run: echo "fail"
   slack-notification:
     name: Slack notification
-    if: always() && (needs.fail_job.result == 'failure')
+#    if: always() && (needs.fail_job.result == 'failure')
     runs-on: ubuntu-latest
     steps:
       - name: slack alert
