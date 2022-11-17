@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: slack alert
         uses: rtCamp/action-slack-notify@v2
-        with:
+        env:
           SLACK_WEBHOOK: ${{ secrets.TEST_WEBHOOK }}
           SLACK_COLOR: ${{ job.status }}
           SLACK_MESSAGE: testw failed on ${{ github.repository }}, <@U04BECLQS4A>
