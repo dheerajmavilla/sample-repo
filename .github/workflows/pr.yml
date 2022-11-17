@@ -43,13 +43,13 @@ jobs:
         run: echo "fail"
   slack-notification:
     name: Slack notification
-    if: failure()
+    if: always() && (needs.hello_world_job == 'failure')
     runs-on: ubuntu-latest
     steps:
       - name: slack alert
         uses: rtCamp/action-slack-notify@v2
         with:
-          SLACK_WEBHOOK: https://hooks.slack.com/services/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
+          SLACK_WEBHOOK: ${{ secrets.TEST_WEBHOOK }}
           SLACK_COLOR: ${{ job.status }}
           SLACK_MESSAGE: testw failed on ${{ github.repository }}, <@U04BECLQS4A>
           SLACK_TITLE: FAILED
