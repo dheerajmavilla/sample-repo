@@ -23,7 +23,7 @@ jobs:
         run: echo "fail"
   slack-notification:
     name: Slack notification
-    needs: [fail_job, fail_job2]
+    #needs: [fail_job, fail_job2]
     if: failure() 
     #&& (needs.fail_job2.result == 'failure')
     runs-on: ubuntu-latest
