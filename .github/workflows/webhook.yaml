@@ -8,7 +8,7 @@ jobs:
       - name: check firt
         run: echo "ok"
       - name: display string
-        run: exit 1
+        run: exit 0
       - name: test
         run: echo "fail"
   slack-notification:
