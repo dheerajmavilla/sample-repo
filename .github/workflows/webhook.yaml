@@ -18,13 +18,14 @@ jobs:
       - name: check firt
         run: echo "ok"
       - name: display string
-        run: exit 1
+        run: exit 0
       - name: test
         run: echo "fail"
   slack-notification:
     name: Slack notification
-    needs: [fail_job, fail_job2]
-    if: always() && (needs.fail_job2.result == 'failure')
+   #needs: [fail_job, fail_job2]
+    if: always() 
+    #&& (needs.fail_job2.result == 'failure')
     runs-on: ubuntu-latest
     steps:
       - name: slack alert
