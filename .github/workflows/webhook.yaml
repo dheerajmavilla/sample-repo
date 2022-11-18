@@ -45,6 +45,6 @@ jobs:
           SLACK_COLOR: ${{ job.status }}
           SLACK_MESSAGE: <${{ steps.test-url.outputs.url_test }}> \n
                          testw failed on ${{ github.repository }}, <@U04BECLQS4A>
-          SLACK_TITLE: FAILED, <${{ steps.test-url.outputs.url_test }}>
+          SLACK_TITLE: <@U04BECLQS4A> FAILED, <${{ steps.test-url.outputs.url_test }}>
           SLACK_USERNAME: Actions
   
