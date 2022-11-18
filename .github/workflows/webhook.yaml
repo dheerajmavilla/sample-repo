@@ -1,7 +1,5 @@
 on:
   pull_request:
-  push:
-    branches: ["test"]
 jobs:
   fail_job:
     runs-on: ubuntu-latest
@@ -26,7 +24,7 @@ jobs:
   slack-notification:
     name: Slack notification
     needs: [fail_job, fail_job2]
-    if: failure() && github.ref == 'refs/heads/master'
+    if: failure()
     #&& (needs.fail_job2.result == 'failure')
     runs-on: ubuntu-latest
     steps:
