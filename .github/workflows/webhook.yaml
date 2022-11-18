@@ -28,7 +28,7 @@ jobs:
     #&& (needs.fail_job2.result == 'failure')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      #- uses: actions/checkout@v3
       - name: test-url
         id: test-url
         run: |
