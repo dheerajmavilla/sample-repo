@@ -38,7 +38,7 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.TEST_WEBHOOK }}
           SLACK_COLOR: ${{ job.status }}
-          SLACK_MESSAGE: testw failed on ${{ github.repository }}, <@U04BECLQS4A>
-          SLACK_TITLE: FAILED, ${{ steps.test-url.outputs.url_test }}
+          SLACK_MESSAGE: ${{ steps.test-url.outputs.url_test }} testw failed on ${{ github.repository }}, <@U04BECLQS4A>
+          SLACK_TITLE: FAILED, 
           SLACK_USERNAME: Actions
   
