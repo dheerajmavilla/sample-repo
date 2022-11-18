@@ -45,6 +45,7 @@ jobs:
           export test_url=https://bla.blabla.com/app/$test_env/testa/${{ env.current_date }}
           echo $test_url
           echo ${{ env.current_date }}
+          echo $GITHUB_REF_NAME
   log-the-inputs:
     needs: log-the-inputs0
     if:  ${{ inputs.logLevel == 'info' }}
