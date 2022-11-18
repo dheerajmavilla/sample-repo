@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: test-url
         run: |
-          url_test=https://kubernetes.io/docs/concepts/storage/persistent-volumes
+          url_test="https://kubernetes.io/docs/concepts/storage/persistent-volumes"
           "url_test=$url_test" >> $GITHUB_OUTPUT
       - name: slack alert
         uses: rtCamp/action-slack-notify@v2
