@@ -32,7 +32,7 @@ jobs:
       - name: test-url
         run: |
           url_test=https://github.com/dheerajmavilla/sample-repo/actions/runs/3494495755/jobs/5850319104
-          "url_test=$url_test" >> $GITHUB_OUTPUT
+          echo "url_test=$url_test" >> $GITHUB_OUTPUT
       - name: slack alert
         uses: rtCamp/action-slack-notify@v2
         env:
