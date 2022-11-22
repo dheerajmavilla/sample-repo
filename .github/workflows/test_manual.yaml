@@ -24,6 +24,11 @@ jobs:
     outputs:
       current-date: ${{ steps.step1.outputs.current_date }}
     steps:
+      - name: Tag summary
+        shell: bash
+        run: |
+          echo "log: ${{ inputs.logLevel }}" >> $GITHUB_STEP_SUMMARY
+          echo "$GITHUB_REF_NAME" >> $GITHUB_STEP_SUMMARY
       - id: step1
         run: |
           echo "current_date=`date +"%Y%m%d-%H%M%S"`" >> $GITHUB_OUTPUT
