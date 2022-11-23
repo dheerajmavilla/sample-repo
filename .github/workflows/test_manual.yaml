@@ -49,6 +49,10 @@ jobs:
           export test_url=https://bla.blabla.com/app/$test_env/testa/${{ env.current_date }}
           echo $test_url
           echo ${{ env.current_date }}
+      - name: new Tag summary
+        run: |
+          echo "log: ${{ inputs.logLevel }}" >> $GITHUB_STEP_SUMMARY
+          echo "$GITHUB_REF_NAME" >> $GITHUB_STEP_SUMMARY
   log-the-inputs:
     needs: log-the-inputs0
     if:  ${{ inputs.logLevel == 'info' }}
