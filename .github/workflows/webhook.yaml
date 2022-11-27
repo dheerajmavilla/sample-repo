@@ -47,7 +47,8 @@ jobs:
 #          SLACK_MESSAGE: • <${{ steps.test-url.outputs.url_test }}>\n• testw failed on ${{ github.repository }}\n• <@U04BECLQS4A>
 #                         testw failed on ${{ github.repository }}, <@U04BECLQS4A>
 #                          <${{ steps.test-url.outputs.url_test }}|This message *is* a link>
-          SLACK_MESSAGE: "• <${{ steps.test-url.outputs.url_test }}|This message *is* a link>\n• testw failed on ${{ github.repository }}\n• <@U04BECLQS4A>"
+#          SLACK_MESSAGE: "• <${{ steps.test-url.outputs.url_test }}|This message *is* a link>\n• testw failed on ${{ github.repository }}\n• <@U04BECLQS4A>"
+          SLACK_MESSAGE: "• <@U04BECLQS4A>, Created New tag ${{ github.repository }}\n• <${{ steps.test-url.outputs.url_test }}|MR to deploy changes to QA>\n• <https://github.com/${{ github.repository }}/releases|GitHub changelog link>"
           SLACK_TITLE: <@U04BECLQS4A> FAILED
           SLACK_USERNAME: Actions
           SLACK_FOOTER: ALert given
