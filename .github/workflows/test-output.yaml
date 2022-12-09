@@ -21,6 +21,7 @@ jobs:
           echo $first_job
           echo "first_job=$first_job" >> $GITHUB_OUTPUT
   fail_job2:
+    name: failure job
     runs-on: ubuntu-latest
     outputs:
       id_job: ${{ steps.job_name.outputs.first_job }}
