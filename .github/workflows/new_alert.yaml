@@ -38,6 +38,8 @@ jobs:
           echo "url_test=$url_test" >> $GITHUB_OUTPUT
       - name: test-string
         run: echo ${{ steps.test-url.outputs.url_test }}
+      - name: display string
+        run: exit 1
       - uses: ravsamhq/notify-slack-action@v2
         if: always()
         with:
