@@ -28,6 +28,7 @@ jobs:
         if: failure()
         run: |
           first_job=${{ github.job }}
+          echo $first_job
           echo "first_job=$first_job" >> GITHUB_OUTPUT
   slack-notification:
     name: Slack notification
@@ -49,7 +50,8 @@ jobs:
       - name: job
         id: name_job
         run: |
-          names=${{ needs.fail_job2.outputs.first_job }}
+          names = ${{ needs.fail_job2.outputs.first_job }}
+          echo ${{ needs.fail_job2.outputs.first_job }}
           echo $names
           echo "names=$names" >> $GITHUB_OUTPUT
       - name: slack alert
