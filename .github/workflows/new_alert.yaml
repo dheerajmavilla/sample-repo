@@ -1,0 +1,51 @@
+on:
+  pull_request:
+jobs:
+  fail_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: check first
+        run: echo "ok"
+      - name: display string
+        run: exit 0
+      - name: test
+        run: echo "ok"
+  fail_job2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: check firt
+        run: echo "ok"
+      - name: display string
+        run: exit 1
+      - name: test
+        run: echo "fail"
+  slack-notification:
+    name: Slack notification
+    needs: [fail_job, fail_job2]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      #- uses: actions/checkout@v3
+      - name: Set env
+        run: |
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: test-url
+        id: test-url
+        run: |
+          url_test=https://github.com/dheerajmavilla/sample-repo/actions/runs/3494495755/jobs/5850319104
+          echo "url_test=$url_test" >> $GITHUB_OUTPUT
+      - name: test-string
+        run: echo ${{ steps.test-url.outputs.url_test }}
+      - uses: ravsamhq/notify-slack-action@v2
+        if: always()
+        with:
+          status: ${{ job.status }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          notification_title: "{workflow} has {status_message}"
+          message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+          footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
+          notify_when: "failure"
+       env:
+          SLACK_WEBHOOK_URL: ${{ secrets.TEST_WEBHOOK }}
