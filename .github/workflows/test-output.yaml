@@ -77,7 +77,7 @@ jobs:
           names="${{ needs.fail_job2.outputs.id_job }}  ${{ needs.fail_job.outputs.id_job1 }}   ${{ needs.fail_job3.outputs.id_job2 }}"
           echo ${{ needs.fail_job2.outputs.id_job }} ${{ needs.fail_job.outputs.id_job1 }} ${{ needs.fail_job3.outputs.id_job2 }}
           echo $names | tee spaces.txt
-          final_names=sed 's/ \{1,\}/,/g' spaces.txt
+          final_names=$(sed 's/ \{1,\}/,/g' spaces.txt)
           echo "names=$final_names" >> $GITHUB_OUTPUT
       - name: slack alert
         uses: rtCamp/action-slack-notify@v2
