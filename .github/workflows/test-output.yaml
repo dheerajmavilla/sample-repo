@@ -45,6 +45,8 @@ jobs:
     outputs:
       id_job2: ${{ steps.job_name.outputs.first_job }}
     steps:
+      - name: abc
+        run: exit 1
       - name: job name
         id: job_name
         if: failure()
