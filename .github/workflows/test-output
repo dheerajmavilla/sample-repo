@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: check firt
-        run: echo "ok"
+        run: echo "okno"
       - name: display string
         run: exit 0
       - name: test
