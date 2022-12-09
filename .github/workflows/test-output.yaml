@@ -74,7 +74,7 @@ jobs:
       - name: job
         id: name_job
         run: |
-          names=${{ needs.fail_job2.outputs.id_job }} ${{ needs.fail_job.outputs.id_job1 }} ${{ needs.fail_job3.outputs.id_job2 }}
+          names="${{ needs.fail_job2.outputs.id_job }} ${{ needs.fail_job.outputs.id_job1 }} ${{ needs.fail_job3.outputs.id_job2 }}"
           echo ${{ needs.fail_job2.outputs.id_job }} ${{ needs.fail_job.outputs.id_job1 }} ${{ needs.fail_job3.outputs.id_job2 }}
           echo $names
           echo "names=$names" >> $GITHUB_OUTPUT
