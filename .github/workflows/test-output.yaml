@@ -3,6 +3,8 @@ on:
 jobs:
   fail_job:
     runs-on: ubuntu-latest
+    outputs:
+      id_job1: ${{ steps.job_name.outputs.first_job }}
     steps:
       - uses: actions/checkout@v3
       - name: check firt
@@ -11,6 +13,13 @@ jobs:
         run: exit 0
       - name: test
         run: echo "ok"
+      - name: job name
+        id: job_name
+        if: failure()
+        run: |
+          first_job=${{ github.job }}
+          echo $first_job
+          echo "first_job=$first_job" >> $GITHUB_OUTPUT
   fail_job2:
     runs-on: ubuntu-latest
     outputs:
@@ -23,6 +32,19 @@ jobs:
         run: exit 1
       - name: test
         run: echo "fail"
+      - name: job name
+        id: job_name
+        if: failure()
+        run: |
+          first_job=${{ github.job }}
+          echo $first_job
+          echo "first_job=$first_job" >> $GITHUB_OUTPUT
+  fail_job3:
+    needs: fail_job
+    runs-on: ubuntu-latest
+    outputs:
+      id_job2: ${{ steps.job_name.outputs.first_job }}
+    steps:
       - name: job name
         id: job_name
         if: failure()
@@ -50,8 +72,8 @@ jobs:
       - name: job
         id: name_job
         run: |
-          names=${{ needs.fail_job2.outputs.id_job }}
-          echo ${{ needs.fail_job2.outputs.id_job }}
+          names=${{ needs.fail_job2.outputs.id_job }} ${{ needs.fail_job.outputs.id_job1 }} ${{ needs.fail_job3.outputs.id_job2 }}
+          echo ${{ needs.fail_job2.outputs.id_job }} ${{ needs.fail_job.outputs.id_job1 }} ${{ needs.fail_job3.outputs.id_job2 }}
           echo $names
           echo "names=$names" >> $GITHUB_OUTPUT
       - name: slack alert
@@ -60,7 +82,7 @@ jobs:
           SLACK_CHANNEL: testing
           SLACK_WEBHOOK: ${{ secrets.NEW_WEBHOOK }}
           SLACK_COLOR: ff0000
-          SLACK_MESSAGE: • ${{ steps.name_job.outputs.names }}\n• testw failed on ${{ github.repository }}\n• <@U04BECLQS4A>
+          SLACK_MESSAGE: • ${{ steps.name_job.outputs.names }} \n• testw failed on ${{ github.repository }}\n• <@U04BECLQS4A>
                          testw failed on ${{ github.repository }}, <@U04BECLQS4A>
           SLACK_TITLE: <@U04BECLQS4A> FAILED, <${{ steps.test-url.outputs.url_test }}>
           SLACK_USERNAME: Actions
