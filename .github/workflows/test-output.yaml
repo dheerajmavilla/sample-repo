@@ -56,7 +56,7 @@ jobs:
           echo "first_job=$first_job" >> $GITHUB_OUTPUT
   slack-notification:
     name: Slack notification
-    needs: [fail_job, fail_job2]
+    needs: [fail_job, fail_job2, fail_job3]
     if: failure()
     runs-on: ubuntu-latest
     steps:
