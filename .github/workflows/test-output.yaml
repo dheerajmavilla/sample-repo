@@ -13,6 +13,8 @@ jobs:
         run: echo "ok"
   fail_job2:
     runs-on: ubuntu-latest
+    outputs:
+      first_job: ${{ steps.job_name.outputs.first_job }}
     steps:
       - uses: actions/checkout@v3
       - name: check firt
@@ -22,10 +24,11 @@ jobs:
       - name: test
         run: echo "fail"
       - name: job name
+        id: job_name
         if: failure()
         run: |
           first_job=${{ github.job }}
-          echo $first_job
+          echo "first_job=$first_job" >> GITHUB_OUTPUT
   slack-notification:
     name: Slack notification
     needs: [fail_job, fail_job2]
@@ -43,13 +46,18 @@ jobs:
           echo "url_test=$url_test" >> $GITHUB_OUTPUT
       - name: test-string
         run: echo ${{ steps.test-url.outputs.url_test }}
+      - name: job
+        id: name_job
+        run: |
+          names=${{ needs.fail_job2.outputs.first_job }}
+          echo "names=$names" >> $GITHUB_OUTPUT
       - name: slack alert
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: testing
           SLACK_WEBHOOK: ${{ secrets.NEW_WEBHOOK }}
           SLACK_COLOR: ff0000
-          SLACK_MESSAGE: • <${{ steps.test-url.outputs.url_test }}>\n• testw failed on ${{ github.repository }}\n• <@U04BECLQS4A>
+          SLACK_MESSAGE: • <${{ steps.name_job.outputs.names }}>\n• testw failed on ${{ github.repository }}\n• <@U04BECLQS4A>
                          testw failed on ${{ github.repository }}, <@U04BECLQS4A>
           SLACK_TITLE: <@U04BECLQS4A> FAILED, <${{ steps.test-url.outputs.url_test }}>
           SLACK_USERNAME: Actions
