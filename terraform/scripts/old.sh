@@ -8,3 +8,4 @@ sed -n $start,"$end"p $OUT_FILE
 test
 second
 s
+n
