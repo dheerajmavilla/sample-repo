@@ -48,7 +48,13 @@ jobs:
           echo ${{ env.test_abc }}
           echo ${{ env.test_xyz }}
           echo ${{ needs.test_push.outputs.commit_id }}
-          curl -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.MY_PAT }} " -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/dheerajmavilla/sample-repo/actions/variables/TEST_VARIABLE -d '{"name":"TEST_VARIABLE","value":"${{ env.test_abc }}"}'
+          curl \
+          -X PATCH \ 
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.MY_PAT }} "\
+          -H "X-GitHub-Api-Version: 2022-11-28"\
+          https://api.github.com/repos/dheerajmavilla/sample-repo/actions/variables/TEST_VARIABLE \
+          -d '{"name":"TEST_VARIABLE","value":"${{ env.test_abc }}"}'
       - name: job name
         id: job_name
         if: failure()
