@@ -21,6 +21,10 @@ jobs:
       - name: set other
         id: test
         run: echo "test_short=test1234" >> $GITHUB_OUTPUT
+      - name: echo
+        run: |
+          echo ${{ steps.vars.outputs.sha_short }}
+          echo ${{ steps.test.outputs.test_short }}
   test: 
     name: test
     runs-on: ubuntu-latest
