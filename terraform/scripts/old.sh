@@ -8,5 +8,5 @@ sed -n $start,"$end"p $OUT_FILE
 test
 second
 sc
-ns
+nsf
 ddd
