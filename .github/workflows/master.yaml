@@ -6,6 +6,17 @@ on:
     paths:
       - terraform/scripts/**
 jobs:
+  test_push:
+    name: test_first
+    runs-on: ubuntu-latest
+    outputs:
+      commit_id: ${{ steps.vars.outputs.sha_short }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Set outputs
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
   test: 
     name: test
     runs-on: ubuntu-latest
@@ -17,7 +28,7 @@ jobs:
           fetch-depth: 0
       - id: test_curl
         run: |
-          curl -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.MY_PAT }} " -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/dheerajmavilla/sample-repo/actions/variables/TEST_VARIABLE -d '{"name":"TEST_VARIABLE","value":"koctocat"}'
+          curl -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.MY_PAT }} " -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/dheerajmavilla/sample-repo/actions/variables/TEST_VARIABLE -d '{"name":"TEST_VARIABLE","value":${{ needs.test_push.outputs.commit_id }}}'
       - name: job name
         id: job_name
         if: failure()
