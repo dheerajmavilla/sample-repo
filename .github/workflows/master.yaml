@@ -34,6 +34,10 @@ jobs:
         with:
           # We need to fetch all branches and commits so that Nx affected has a base to compare against.
           fetch-depth: 0
+      - name: echo_two
+        run: |
+          echo ${{ needs.test_push.outputs.commit_id }}
+          echo ${{ needs.test_push.outputs.test_id }}
       - name: set env
         run: |
           echo "test_abc=${{ needs.test_push.outputs.commit_id }}" >> $GITHUB_ENV
