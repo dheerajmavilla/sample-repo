@@ -24,7 +24,9 @@ jobs:
           git checkout $current
           test_diff1=$(git diff $current..$previous terraform/scripts)
           echo $test_diff1
-          echo "test_diff=$test_diff1" >> $GITHUB_OUTPUT
+          echo "test_diff<<EOF" >> $GITHUB_OUTPUT
+          echo "$test_diff1" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
       - name: test
         if: steps.diff.outputs.test_diff != ''
         run: |
