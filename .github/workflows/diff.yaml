@@ -17,7 +17,7 @@ jobs:
           git ls-remote --heads origin | sed 's?.*refs/heads/??'
           git ls-remote --heads origin | sed 's?.*refs/heads/??' > xyz.txt
           export current=$(tail -1 xyz.txt)
-          export previous=$(tail -1 xyz.txt | head -1)
+          export previous=$(tail -2 xyz.txt | head -1)
           echo $current
           echo $previous
           git checkout $previous
