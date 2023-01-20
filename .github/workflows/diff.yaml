@@ -1,0 +1,27 @@
+name: test diff
+
+on:
+  push:
+    branches: [ "main" ]
+    
+jobs:
+  flowable_diff:
+#    if: ${{ startsWith(github.ref, 'refs/tags/qa') }} || ${{ startsWith(github.ref, 'refs/tags/prod') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: diff workflow files
+        id: diff
+        run: |
+          git fetch --all
+          git ls-remote --heads origin | sed 's?.*refs/heads/??'
+          git ls-remote --heads origin | sed 's?.*refs/heads/??' > xyz.txt
+          export current=$(tail -1 xyz.txt)
+          export previous=$(tail -1 xyz.txt | head -1)
+          git checkout $current
+          echo "test_diff=$(git diff $current..$previous terraform/scripts)" >> GITHUB_OUTPUT
+      - name: test
+        if: steps.diff.outputs.test_diff != ''
+        run: |
+          output_job=${{ github.job }}
+          echo "output_job=$output_job" >> $GITHUB_OUTPUT
