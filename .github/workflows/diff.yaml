@@ -18,6 +18,9 @@ jobs:
           git ls-remote --heads origin | sed 's?.*refs/heads/??' > xyz.txt
           export current=$(tail -1 xyz.txt)
           export previous=$(tail -1 xyz.txt | head -1)
+          echo $current
+          echo $previous
+          git checkout $previous
           git checkout $current
           git diff $current..$previous terraform/scripts
           echo "test_diff=$(git diff $current..$previous terraform/scripts)" >> GITHUB_OUTPUT
