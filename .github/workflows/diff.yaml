@@ -26,7 +26,7 @@ jobs:
           echo $test_diff1
           echo "test_diff=$test_diff1" >> GITHUB_OUTPUT
       - name: test
-        if: steps.diff.outputs.test_diff != ''
+        if: steps.diff.outputs.test_diff == ''
         run: |
           output_job=${{ github.job }}
           echo "output_job=$output_job" >> $GITHUB_OUTPUT
