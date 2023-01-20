@@ -22,7 +22,7 @@ jobs:
           echo $previous
           git checkout $previous
           git checkout $current
-          test_diff1=$(git diff $current..$previous terraform/scripts)
+          test_diff1=$(git diff $current..$previous README.md)
           echo $test_diff1
           echo "test_diff<<EOF" >> $GITHUB_OUTPUT
           echo "$test_diff1" >> $GITHUB_OUTPUT
