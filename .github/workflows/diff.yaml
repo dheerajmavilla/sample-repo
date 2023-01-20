@@ -20,6 +20,7 @@ jobs:
           export previous=$(tail -2 xyz.txt | head -1)
           echo $current
           echo $previous
+          git checkout $previous
           git checkout $current
           test_diff=$(git diff $current..$previous terraform/scripts)
           echo "test_diff<<EOF" >> $GITHUB_OUTPUT
