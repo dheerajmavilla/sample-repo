@@ -22,7 +22,7 @@ jobs:
           echo $previous
           git checkout $previous
           git checkout $current
-          file_name=$(git diff --name-only $curr_tag..$prev_tag terraform/scripts)
+          file_name=$(git diff --name-only $current..$previous terraform/scripts)
           echo "file_name<<EOF" >> $GITHUB_OUTPUT
           echo "$file_name" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
