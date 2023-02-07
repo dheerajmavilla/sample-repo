@@ -16,4 +16,5 @@ jobs:
         with:
           pr_body: ${{ env.line_diff }}
           source_branch: ${{ github.head_ref }}
+          destination_branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
