@@ -2,6 +2,9 @@ name: env_test
 on:
   workflow_dispatch:
     inputs:
+      ref:
+        description: 'The branch or tag of the workflow file to use'
+        required: true
       logLevel:
         description: "Log level"
         required: true
