@@ -5,6 +5,9 @@ on:
       ref:
         description: 'The branch or tag of the workflow file to use'
         required: true
+      label:
+        description: 'The display text for the "use workflow from" field'
+        required: true
       logLevel:
         description: "Log level"
         required: true
