@@ -1,0 +1,39 @@
+name: cypress
+
+on:
+  push:
+    branches: [ "main" ]
+    
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: cypress job
+    outputs:
+      cypress_job: ${{ steps.cypress_step.outputs.filters_log }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: sed output
+        id: cypress_step
+        shell: bash
+        run: |
+          filters_log=$(cat test_cypress.txt |sed -n 'H; /^Run Finished/h; ${g;p;}' |sed -e '1d' -e '/Recorded/q' |sed '$ d')
+          echo "filters_log<<EOF" >> $GITHUB_OUTPUT
+          echo "$filters_log" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - run: echo "random-number ${{ steps.cypress_step.outputs.filters_log }}"
+        shell: bash
+  slack-notification:
+    name: Slack notification
+    needs: [hello_world_job]
+    runs-on: ubuntu-latest
+    steps:
+      - name: slack alert
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: testing
+          SLACK_WEBHOOK: ${{ secrets.NEW_WEBHOOK }}
+          SLACK_COLOR: ff0000
+          SLACK_MESSAGE: "${{ needs.hello_world_job.outputs.cypress_job }}"
+          SLACK_TITLE: FAILED
+          SLACK_USERNAME: Actions
+          SLACK_FOOTER: ALert given
