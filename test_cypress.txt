@@ -1,0 +1,72 @@
+  (Run Finished)
+
+
+       Spec                                              Tests  Passing  Failing  Pending  Skipped  
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ ✔  assertions/LoginAssertions.cy.js         00:50       14       14        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  functionality/login.cy.js                01:03       10        8        -        2        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  functionality/signingFlow.cy.js           33ms        1        -        -        1        - │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+    ✔  All specs passed!                        01:54       25       22        -        3        -  
+
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                       
+  Recorded Run: https://cloud.cypress.io/projects/muuniz/runs/80
+
+
+
+  signingFlow
+    upload PDF file and sign contract as creator
+      - upload PDF file & sign
+
+
+  0 passing (28ms)
+  1 pending
+
+[mochawesome] Report JSON saved to /home/runner/work/cypress-ui/cypress-ui/cypress/reports/AutomationReport_005.json
+
+[mochawesome] Report HTML saved to /home/runner/work/cypress-ui/cypress-ui/cypress/reports/AutomationReport_005.html
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        1                                                                                │
+  │ Passing:      0                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      1                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     0 seconds                                                                        │
+  │ Estimated:    1 minute, 8 seconds                                                              │
+  │ Spec Ran:     functionality/signingFlow.cy.js                                                  │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Uploading Results)
+
+  - Nothing to Upload
+
+====================================================================================================
+
+  (Run Finished)
+
+
+       Spec                                              Tests  Passing  Failing  Pending  Skipped  
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ ✔  assertions/LoginAssertions.cy.js         00:48       14       14        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  functionality/login.cy.js                01:08       10        8        -        2        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  functionality/signingFlow.cy.js           19ms        1        -        -        1        - │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+    ✔  All specs passed!                        01:56       25       22        -        3        -  
+
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                       
+  Recorded Run: https://cloud.cypress.io/projects/muuniz/runs/79
