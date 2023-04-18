@@ -17,7 +17,8 @@ jobs:
         shell: bash
         run: |
           cat test_cypress.txt |sed -n 'H; /^Run Finished/h; ${g;p;}' |sed -e '1d' -e '/Recorded/q' |sed '$ d' > raw_text.txt
-          filters_log=$(sed -e 's/^[[:space:]]*//;s/[[:space:]]*$//' -e '/^$/d' -e '/Run Finished/d' -e 's/│/|/g' -e 's/┌/+/g' -e 's/└/+/g' -e 's/├/+/g' -e 's/┤/+/g' -e 's/┬/+/g' -e 's/┴/+/g' -e 's/─/-/g' -e 's/Spec/|Spec|/g' -e 's/Tests/|Tests|/g' -e 's/Passing/|Passing|/g' -e 's/Failing/|Failing|/g' -e 's/Pending/|Pending|/g' -e 's/Skipped/|Skipped|/g' raw_text.txt)
+          filters_log_first=$(sed -e 's/^[[:space:]]*//;s/[[:space:]]*$//' -e '/^$/d' -e '/Run Finished/d' -e 's/│/|/g' -e 's/┌/+/g' -e 's/└/+/g' -e 's/├/+/g' -e 's/┤/+/g' -e 's/┬/+/g' -e 's/┴/+/g' -e 's/─/-/g' -e 's/Spec/|Spec|/g' -e 's/Tests/|Tests|/g' -e 's/Passing/|Passing|/g' -e 's/Failing/|Failing|/g' -e 's/Pending/|Pending|/g' -e 's/Skipped/|Skipped|/g' raw_text.txt)
+          filters_log=$(sed -e 's/^[[:space:]]*//;s/[[:space:]]*$//' -e '/^$/d' -e '/Run Finished/d' -e 's/│/|/g' -e 's/┌/+/g' -e 's/└/+/g' -e 's/├/+/g' -e 's/┤/+/g' -e 's/┬/+/g' -e 's/┴/+/g' -e 's/─/-/g' -e 's/Spec/|Spec|/g' -e 's/Tests/|Tests         |/g' -e 's/Passing/|Passing       |/g' -e 's/Failing/|Failing       |/g' -e 's/Pending/|Pending       |/g' -e 's/Skipped/|Skipped       |/g' raw_text.txt)
           echo "filters_log<<EOF" >> $GITHUB_OUTPUT
           echo "$filters_log" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
