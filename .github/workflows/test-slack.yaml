@@ -2,19 +2,8 @@ name: Deploy oogway QA/prod
 on:
   workflow_dispatch:
     inputs:
-      Env:
-        description: "Environment to deploy oogway"
-        required: true
-        default: "qa"
-        type: choice
-        options:
-          - qa
-          - production
-      Tag:
-        description: "Build tag name to deploy oogway"
-        required: true
-      commitIds:
-        description: "Commit id's to cherrypick comma seperated"
+      qa_tag:
+        description: "QA tag"
         required: true
         type: string
 jobs:
@@ -22,6 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: validate tag
+        id: validate_tag
+        run: |
+          release_date=$(echo $GITHUB_REF_NAME | cut -d'-' -f2)
+          current_release_tag=$(echo ${{ inputs.qa_tag }} | cut -d'_' -f2)
+          if [[ $release_date != $current_release_tag ]]; then
+            exit 1
+          fi
       - name: check firt
         run: echo "ok"
       - name: display string
