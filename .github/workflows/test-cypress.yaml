@@ -12,6 +12,13 @@ jobs:
       cypress_job: ${{ steps.cypress_step.outputs.filters_log }}
     steps:
       - uses: actions/checkout@v3
+      - name: validate tag
+        id: validate_tag
+        run: |
+          release_date=`cut -d'-' -f2 <<< release-20230518`
+          current_release_tag=`cut -d'_' -f2 <<< qa_20230530_RC7`
+          if release_date !=  current_release_tag
+            exit 1
       - name: sed output
         id: cypress_step
         shell: bash
