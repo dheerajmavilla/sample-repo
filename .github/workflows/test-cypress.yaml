@@ -19,6 +19,7 @@ jobs:
           current_release_tag=`cut -d'_' -f2 <<< qa_20230530_RC7`
           if $release_date != $current_release_tag
             exit 1
+          fi
       - name: sed output
         id: cypress_step
         shell: bash
