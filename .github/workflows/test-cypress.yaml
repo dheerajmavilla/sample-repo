@@ -18,6 +18,7 @@ jobs:
           release_date=`cut -d'-' -f2 <<< release-20230518`
           current_release_tag=`cut -d'_' -f2 <<< qa_20230530_RC7`
           if $release_date != $current_release_tag
+          then
             exit 1
           fi
       - name: sed output
