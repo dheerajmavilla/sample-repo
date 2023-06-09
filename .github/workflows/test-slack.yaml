@@ -10,20 +10,15 @@ on:
         options:
           - qa
           - production
-      Tag:
-        description: "Build tag name to deploy oogway"
-        required: true
-      commitIds:
-        description: "Commit id's to cherrypick comma seperated"
-        required: true
-        type: string
 jobs:
   fail_job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: check firt
-        run: echo "ok"
+        run: |
+          echo "ok"
+          echo "${{ github.ref_name }}"
       - name: display string
         run: exit 0
       - name: test
