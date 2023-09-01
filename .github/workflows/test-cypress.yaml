@@ -22,7 +22,12 @@ jobs:
           sudo mv hcledit /usr/local/bin/
 
       - name: Verify hcledit version
-        run: hcledit --version
+        run: hcledit version
+      - name: test
+        run: |
+          cat terraform/test.tf
+          cat terraform/test.tf | hcledit attribute set resource.google_cloud_run_service.keypointers-extraction-app-eu.template.spec.containers '"asia-docker.pkg.dev/spotdraft-qa/sd-qa-asia/mr-ping/keypointers_extraction:main"'
+      
 
   slack-notification:
     name: Slack notification
