@@ -8,8 +8,6 @@ jobs:
   hello_world_job:
     runs-on: ubuntu-latest
     name: cypress job
-    outputs:
-      cypress_job: ${{ steps.cypress_step.outputs.filters_log }}
     steps:
       - uses: actions/checkout@v3
       - name: validate tag
@@ -21,18 +19,20 @@ jobs:
           if [[ $release_date != $current_release_tag ]]; then
             exit 1
           fi
-      - name: sed output
-        id: cypress_step
-        shell: bash
+      - name: Download and install hcledit
         run: |
-          cat test_cypress.txt |sed -n 'H; /^Run Finished/h; ${g;p;}' |sed -e '1d' -e '/Recorded/q' |sed '$ d' > raw_text.txt
-          filters_log_first=$(sed -e 's/^[[:space:]]*//;s/[[:space:]]*$//' -e '/^$/d' -e '/Run Finished/d' -e 's/│/|/g' -e 's/┌/+/g' -e 's/└/+/g' -e 's/├/+/g' -e 's/┤/+/g' -e 's/┬/+/g' -e 's/┴/+/g' -e 's/─/-/g' -e 's/Spec/|Spec|/g' -e 's/Tests/|Tests|/g' -e 's/Passing/|Passing|/g' -e 's/Failing/|Failing|/g' -e 's/Pending/|Pending|/g' -e 's/Skipped/|Skipped|/g' raw_text.txt)
-          filters_log=$(sed -e 's/^[[:space:]]*//;s/[[:space:]]*$//' -e '/^$/d' -e '/Run Finished/d' -e 's/│/|/g' -e 's/┌/+/g' -e 's/└/+/g' -e 's/├/+/g' -e 's/┤/+/g' -e 's/┬/+/g' -e 's/┴/+/g' -e 's/─/-/g' -e 's/Spec/|Spec|/g' -e 's/Tests/|Tests         |/g' -e 's/Passing/|Passing       |/g' -e 's/Failing/|Failing       |/g' -e 's/Pending/|Pending       |/g' -e 's/Skipped/|Skipped       |/g' raw_text.txt)
-          echo "filters_log<<EOF" >> $GITHUB_OUTPUT
-          echo "$filters_log" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-      - run: echo "random-number ${{ steps.cypress_step.outputs.filters_log }}"
-        shell: bash
+          # Download the hcledit binary
+          curl -OL https://github.com/minamijoyo/hcledit/releases/download/v0.2.9/hcledit_0.2.9_linux_amd64.tar.gz
+
+          # Extract the binary
+          tar xvzf hcledit_0.2.9_linux_amd64.tar.gz
+
+          # Move the binary to /usr/local/bin (you may need sudo)
+          sudo mv hcledit /usr/local/bin/
+
+      - name: Verify hcledit version
+        run: hcledit --version
+
   slack-notification:
     name: Slack notification
     needs: [hello_world_job]
