@@ -26,7 +26,7 @@ jobs:
       - name: test
         run: |
           cat terraform/test.tf
-          cat terraform/test.tf | hcledit attribute set resource.google_cloud_run_service.keypointers-extraction-app-eu.template.spec.containers '"asia-docker.pkg.dev/spotdraft-qa/sd-qa-asia/mr-ping/keypointers_extraction:main"'
+          cat terraform/test.tf | hcledit attribute set resource.google_cloud_run_service.keypointers-extraction-app-eu.template.spec.containers.image '"asia-docker.pkg.dev/spotdraft-qa/sd-qa-asia/mr-ping/keypointers_extraction:main"'
       
 
   slack-notification:
