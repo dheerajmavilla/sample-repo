@@ -10,15 +10,6 @@ jobs:
     name: cypress job
     steps:
       - uses: actions/checkout@v3
-      - name: validate tag
-        id: validate_tag
-        shell: bash
-        run: |
-          release_date=$(echo "release-20230518" | cut -d'-' -f2)
-          current_release_tag=$(echo "qa_20230530_RC7" | cut -d'_' -f2)
-          if [[ $release_date != $current_release_tag ]]; then
-            exit 1
-          fi
       - name: Download and install hcledit
         run: |
           # Download the hcledit binary
