@@ -10,7 +10,6 @@ jobs:
     name: cypress job
     container: alpine/git:1.0.27
     steps:
-      - uses: actions/checkout@v3
       - name: Download and install hcledit
         run: |
           # Download the hcledit binary
@@ -27,9 +26,8 @@ jobs:
       - name: test
         run: |
           pwd
-          cd terraform
-          cat test.tf
-          cat test.tf | hcledit attribute set resource.google_cloud_run_service.keypointers-extraction-app-eu.template.spec.containers.image '"asia-docker.pkg.dev/spotdraft-qa/sd-qa-asia/mr-ping/keypointers_extraction:main"'
+          mkdir gitops
+          cd gitops
           pwd
           cd ~
           pwd
