@@ -32,7 +32,9 @@ jobs:
           cd $HOME
           pwd
           cd /__w/sample-repo/sample-repo
+          pwd
           cd gitops
+          pwd
       
 
   slack-notification:
