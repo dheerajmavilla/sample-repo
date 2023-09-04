@@ -20,7 +20,7 @@ jobs:
           tar xvzf hcledit_0.2.9_linux_amd64.tar.gz
 
           # Move the binary to /usr/local/bin (you may need sudo)
-          sudo mv hcledit /usr/local/bin/
+          mv hcledit /usr/local/bin/
 
       - name: Verify hcledit version
         run: hcledit version
