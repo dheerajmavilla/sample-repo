@@ -10,10 +10,11 @@ jobs:
     name: cypress job
     container: alpine/git:1.0.27
     steps:
+      - uses: actions/checkout@v3
       - name: Download and install hcledit
         run: |
           # Download the hcledit binary
-          curl -OL https://github.com/minamijoyo/hcledit/releases/download/v0.2.9/hcledit_0.2.9_linux_amd64.tar.gz
+          wget https://github.com/minamijoyo/hcledit/releases/download/v0.2.9/hcledit_0.2.9_linux_amd64.tar.gz
 
           # Extract the binary
           tar xvzf hcledit_0.2.9_linux_amd64.tar.gz
