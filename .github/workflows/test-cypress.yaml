@@ -29,8 +29,10 @@ jobs:
           mkdir gitops
           cd gitops
           pwd
-          cd ~
+          echo $HOME
+          cd $HOME
           pwd
+          
       
 
   slack-notification:
