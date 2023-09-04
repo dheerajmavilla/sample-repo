@@ -29,10 +29,10 @@ jobs:
           mkdir gitops
           cd gitops
           pwd
-          echo $HOME
           cd $HOME
           pwd
-          
+          cd /__w/sample-repo/sample-repo
+          cd gitops
       
 
   slack-notification:
