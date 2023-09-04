@@ -8,8 +8,8 @@ jobs:
   hello_world_job:
     runs-on: ubuntu-latest
     name: cypress job
+    container: alpine/git:1.0.27
     steps:
-      - uses: actions/checkout@v3
       - name: Download and install hcledit
         run: |
           # Download the hcledit binary
