@@ -5,9 +5,24 @@ on:
     branches: [ "main" ]
     
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: build
+    outputs:
+      IMAGE_BUILD: ${{ steps.build.outputs.IMAGE_BUILD }}
+    steps:
+      - name: test
+        run: |
+          container_pushes=$(echo //agents:app.push //metadata_extraction/functions/server:app.push //text_extraction/functions/server:app.push)
+          echo $container_pushes
+          echo $container_pushes > image_build.txt
+          echo "IMAGE_BUILD<<EOF" >> $GITHUB_OUTPUT
+          echo "$(cat image_build.txt | xargs)" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
   hello_world_job:
     runs-on: ubuntu-latest
     name: cypress job
+    needs: build
     container: alpine/git:1.0.27
     steps:
       - name: Download and install hcledit
@@ -25,8 +40,8 @@ jobs:
         run: hcledit version
       - name: test
         run: |
-          BUILD_IMAGE=//agents:app.push //metadata_extraction/functions/server:app.push //text_extraction/functions/server:app.push
-          export BUILD_IMAGE
+          export BUILD_IMAGE=${{ needs.build.outputs.IMAGE_BUILD }}
+          echo $BUILD_IMAGE
           pwd
           mkdir gitops
           cd gitops
