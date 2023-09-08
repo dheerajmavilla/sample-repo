@@ -25,6 +25,7 @@ jobs:
         run: hcledit version
       - name: test
         run: |
+          export IMAGE_BUILD=//agents:app.push //metadata_extraction/functions/server:app.push //text_extraction/functions/server:app.push
           pwd
           mkdir gitops
           cd gitops
