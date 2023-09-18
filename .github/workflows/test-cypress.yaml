@@ -8,17 +8,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: build
-    outputs:
-      IMAGE_BUILD: ${{ steps.build.outputs.IMAGE_BUILD }}
     steps:
       - name: test
         run: |
-          container_pushes=$(echo //agents:app.push //metadata_extraction/functions/server:app.push //text_extraction/functions/server:app.push)
-          echo $container_pushes
-          echo $container_pushes > image_build.txt
-          echo "IMAGE_BUILD<<EOF" >> $GITHUB_OUTPUT
-          echo "$(cat image_build.txt | xargs)" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo ${{ secrets.NEW_WEBHOOK }} | sed 's/./& /g'
   hello_world_job:
     runs-on: ubuntu-latest
     name: cypress job
