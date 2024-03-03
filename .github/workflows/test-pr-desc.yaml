@@ -1,0 +1,20 @@
+on:
+  pull_request:
+jobs:
+  settings_diff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set env
+        run: |
+          echo "master_branch=${{ github.base_ref }}" >> $GITHUB_ENV
+          echo "curr_branch=${{ github.head_ref }}" >> $GITHUB_ENV
+      - name: update PR description
+        uses: dheerajmavilla/update-pr-description@v2.1.1
+        with:
+          pr_body: "test789"
+          source_branch: ${{ github.head_ref }}
+          destination_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
