@@ -1,0 +1,60 @@
+on:
+#  pull_request:
+  workflow_dispatch:
+    inputs:
+      commitIds:
+        description: "Commit id's to cherrypick comma seperated"
+        required: true
+        type: string
+jobs:
+  fail_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: check firt
+        run: echo "ok"
+      - name: display string
+        run: exit 0
+      - name: test
+        run: echo "ok"
+  fail_job2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: check firt
+        run: echo "ok"
+      - name: display string
+        run: exit 1
+      - name: test
+        run: echo "fail"
+  slack-notification:
+    name: Slack notification
+    needs: [fail_job, fail_job2]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      #- uses: actions/checkout@v3
+      - name: Set env
+        run: |
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: test-url
+        id: test-url
+        run: |
+          url_test=https://github.com/dheerajmavilla/sample-repo/actions/runs/3494495755/jobs/5850319104
+          echo "url_test=$url_test" >> $GITHUB_OUTPUT
+      - name: test-string
+        run: echo ${{ steps.test-url.outputs.url_test }}
+      - name: slack alert
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: testing
+          SLACK_WEBHOOK: ${{ secrets.TEST_WEBHOOK }}
+          SLACK_COLOR: ff0000
+#          SLACK_MESSAGE: • <${{ steps.test-url.outputs.url_test }}>\n• testw failed on ${{ github.repository }}\n• <@U04BECLQS4A>
+#                         testw failed on ${{ github.repository }}, <@U04BECLQS4A>
+#                          <${{ steps.test-url.outputs.url_test }}|This message *is* a link>
+#          SLACK_MESSAGE: "• <${{ steps.test-url.outputs.url_test }}|This message *is* a link>\n• testw failed on ${{ github.repository }}\n• <@U04BECLQS4A>"
+          SLACK_MESSAGE: "• ${{ inputs.commitIds }} ${{ github.head_ref }} <@U04BECLQS4A>, Created New tag ${{ github.repository }}\n• <${{ steps.test-url.outputs.url_test }}|MR to deploy changes to QA>\n• <https://github.com/${{ github.repository }}/releases|GitHub changelog link>"
+          SLACK_TITLE: <@U04BECLQS4A> FAILED
+          SLACK_USERNAME: Actions
+          SLACK_FOOTER: ALert given
