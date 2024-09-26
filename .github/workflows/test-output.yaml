@@ -1,0 +1,93 @@
+on:
+  pull_request:
+jobs:
+  fail_job:
+    runs-on: ubuntu-latest
+    outputs:
+      id_job1: ${{ steps.job_name.outputs.first_job }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: check firt
+        run: echo "okno"
+      - name: display string
+        run: exit 0
+      - name: test
+        run: echo "ok"
+      - name: job name
+        id: job_name
+        if: failure()
+        run: |
+          first_job=${{ github.job }}
+          echo $first_job
+          echo "first_job=$first_job" >> $GITHUB_OUTPUT
+  fail_job2:
+    name: failure job
+    runs-on: ubuntu-latest
+    outputs:
+      id_job: ${{ steps.job_name.outputs.first_job }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: check firt
+        run: echo "ok"
+      - name: display string
+        run: exit 1
+      - name: test
+        run: echo "fail"
+      - name: job name
+        id: job_name
+        if: failure()
+        run: |
+          first_job=${{ github.job }}
+          echo $first_job
+          echo "first_job=$first_job" >> $GITHUB_OUTPUT
+  fail_job3:
+    needs: fail_job
+    runs-on: ubuntu-latest
+    outputs:
+      id_job2: ${{ steps.job_name.outputs.first_job }}
+    steps:
+      - name: abc
+        run: exit 1
+      - name: job name
+        id: job_name
+        if: failure()
+        run: |
+          first_job=${{ github.job }}
+          echo $first_job
+          echo "first_job=$first_job" >> $GITHUB_OUTPUT
+  slack-notification:
+    name: Slack notification
+    needs: [fail_job, fail_job2, fail_job3]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      #- uses: actions/checkout@v3
+      - name: Set env
+        run: |
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: test-url
+        id: test-url
+        run: |
+          url_test=https://github.com/dheerajmavilla/sample-repo/actions/runs/3494495755/jobs/5850319104
+          echo "url_test=$url_test" >> $GITHUB_OUTPUT
+      - name: test-string
+        run: echo ${{ steps.test-url.outputs.url_test }}
+      - name: job
+        id: name_job
+        run: |
+          names="${{ needs.fail_job2.outputs.id_job }}  ${{ needs.fail_job.outputs.id_job1 }}   ${{ needs.fail_job3.outputs.id_job2 }}"
+          echo ${{ needs.fail_job2.outputs.id_job }} ${{ needs.fail_job.outputs.id_job1 }} ${{ needs.fail_job3.outputs.id_job2 }}
+          echo $names | tee spaces.txt
+          final_names=$(sed 's/ \{1,\}/, /g' spaces.txt)
+          echo "names=$final_names" >> $GITHUB_OUTPUT
+      - name: slack alert
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: testing
+          SLACK_WEBHOOK: ${{ secrets.NEW_WEBHOOK }}
+          SLACK_COLOR: ff0000
+          SLACK_MESSAGE: • ${{ steps.name_job.outputs.names }} \n• ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} testw failed on ${{ github.repository }}\n• <@U04BECLQS4A>
+                         testw failed on ${{ github.repository }}, <@U04BECLQS4A>
+          SLACK_TITLE: <@U04BECLQS4A> FAILED, <${{ steps.test-url.outputs.url_test }}>
+          SLACK_USERNAME: Actions
+          SLACK_FOOTER: ALert given
