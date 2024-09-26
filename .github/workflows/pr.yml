@@ -42,7 +42,20 @@ jobs:
             ```
           reactions: eyes, rocket
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      - name: display string
-#        shell: bash
-#        run: |
-#          echo "The string is: ${{ steps.foo.outputs.filter-log }}"
+      - name: display string
+        run: exit 1
+      - name: test
+        run: echo "fail"
+  slack-notification:
+    name: Slack notification
+    if: always() && (needs.hello_world_job == 'failure')
+    runs-on: ubuntu-latest
+    steps:
+      - name: slack alert
+        uses: rtCamp/action-slack-notify@v2
+        with:
+          SLACK_WEBHOOK: ${{ secrets.TEST_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MESSAGE: testw failed on ${{ github.repository }}, <@U04BECLQS4A>
+          SLACK_TITLE: FAILED
+          SLACK_USERNAME: Actions

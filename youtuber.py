@@ -13,5 +13,7 @@ class YouTuber:
 	def update_name(self):
 		self.name = new_name
 
-	def update_channel(self, new_link):
-		self.channel_link = new_link
+	def update_channel(self, old_link):
+		self.channel_link = old_link
+print("cool")
+a=7
