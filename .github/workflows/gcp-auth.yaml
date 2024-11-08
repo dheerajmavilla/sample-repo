@@ -1,0 +1,32 @@
+name: workflow for Main
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      IMAGE_TAG: ${{ steps.build.outputs.IMAGE_TAG }}
+      IMAGE_BUILD: ${{ steps.build.outputs.IMAGE_BUILD }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9.12'
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1.1.1'
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GH_SERVICE_ACCOUNT }}
+      - name: build
+        id: build
+        run: |
+          gcloud auth configure-docker asia-docker.pkg.dev
